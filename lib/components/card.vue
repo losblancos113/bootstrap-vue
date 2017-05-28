@@ -6,7 +6,7 @@
         </slot>
 
         <!-- Card Header-->
-        <component v-if="header || showHeader" :is="headerTag" :class="headerClasses">
+        <component v-if="header || showHeader" :is="headerTag" :class="['card-header',headerClass]">
             <slot name="header">
                 <div v-html="header"></div>
             </slot>
@@ -36,19 +36,6 @@
 <script>
     export default {
         computed: {
-            headerClasses() {
-                let header = {
-                    'card-header' : true
-                };
-                if(this.headerClass != null && this.headerClass.length > 0){
-                    let formattedHeaderClass = this.headerClass.replace(/\s+/g,' ').trim();
-                    let classes = formattedHeaderClass.split(' ');
-                    classes.forEach((clazz) => {
-                        header[clazz] = true;
-                    });
-                }
-              return header;
-            },
             blockClass() {
                 return [
                     'card-block',
@@ -105,8 +92,8 @@
                 default: 'div'
             },
             headerClass: {
-                type: String,
-                default: null
+                type: [String, Array],
+                default: ''
             },
 
             // Footer
